@@ -1,0 +1,20 @@
+{
+    "name": "recently",
+    "version": "0.0.1",
+    "description": "Recently is a small Mozilla Thunderbird extension for having the most recent contacts at hand",
+    "repository": "git@github.com:arndissler/recently.git",
+    "author": "Arnd Issler <email@arndissler.net>",
+    "license": "MPL-2.0",
+    "scripts": {
+        "start": "web-ext run --source-dir ./src/ --firefox-binary $HOME/Projects/apps/thunderbirds/Thunderbird\\ 78.app/Contents/MacOS/thunderbird-bin --firefox-profile $HOME/Projects/apps/thunderbirds/profiles/profile-78 --browser-console --verbose --keep-profile-changes",
+        "util:format": "prettier --write 'src/**/*.{js,jsm,ts,tsx,md,json,xul}'"
+    },
+    "devDependencies": {
+        "detect-indent": "^6.0.0",
+        "detect-newline": "^3.1.0",
+        "prettier": "^1.19.1",
+        "standard-version": "^9.2.0",
+        "stringify-package": "^1.0.1",
+        "web-ext": "^4.3.0"
+    }
+}
