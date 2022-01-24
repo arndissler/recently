@@ -7,5 +7,14 @@
     },
     "browserActionButton": {
         "message": "Contacts"
+    },
+    "popupText": {
+        "message": "Messages from within the last $lookback$ days",
+        "placeholders": {
+            "lookback": {
+                "content": "$1",
+                "example": "14"
+            }
+        }
     }
 }

@@ -1,0 +1,28 @@
+body {
+    background-color: white;
+}
+
+.recently-popup__text-wrapper {
+    padding: 0.5em 1em;
+    background-color: #ededf0;
+    color: #0c0c0d;
+}
+
+.recently-list {
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.recently-list__item-wrapper {
+    border: 1px solid #eee;
+    padding: 1em 2em;
+    margin: 0.5em;
+}
+
+.recently-list__item-wrapper:hover {
+    border-color: #003eaa;
+    background-color: #eee;
+}
