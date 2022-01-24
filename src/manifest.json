@@ -14,8 +14,8 @@
     "homepage_url": "https://mailmindr.net/",
     "version": "1.2.2",
     "icons": {
-        "16": "images/mailmindr-flag--rainbow.svg",
-        "32": "images/mailmindr-flag--rainbow.svg"
+        "16": "icons/recently-icon.svg",
+        "32": "icons/recently-icon.svg"
     },
     "permissions": [
         "accountsRead",
@@ -27,7 +27,19 @@
     "browser_action": {
         "browser_style": true,
         "default_title": "__MSG_browserActionButton__",
-        "default_popup": "popup/index.html"
+        "default_popup": "popup/index.html",
+        "theme_icons": [
+            {
+                "dark": "icons/recently-icon--dark.svg",
+                "light": "icons/recently-icon--light.svg",
+                "size": 16
+            },
+            {
+                "dark": "icons/recently-icon--dark.svg",
+                "light": "icons/recently-icon--light.svg",
+                "size": 32
+            }
+        ]
     },
     "background": {
         "page": "scripts/background.html",
