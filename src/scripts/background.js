@@ -1,13 +1,39 @@
 // @ts-check
 /// <reference types="../../.typings/browser" />
 
+/**
+ * @typedef {Object} RecentlyHistorgramEntry
+ * @property {string[]} names
+ * @property {string} author
+ * @property {number} count
+ */
+
+/**
+ * @typedef RecentlyOptions
+ * @type {Object}
+ * @property {number} [lookback=14]
+ */
+
+/**
+ * @typedef RecentlyState
+ * @type {Object}
+ * @property {messenger.messages.MessageHeader[]} messages
+ * @property {RecentlyOptions} options
+ * @property {RecentlyHistorgramEntry[]} __histogram
+ */
+
+/** @type {RecentlyState} */
 let state = {
     messages: [],
-    __histogram: {}
+    options: {
+        lookback: 14
+    },
+    __histogram: []
 };
 
 /**
  * Extracts the email address of an email author
+ *
  * @param {string} author The author of an email message, might be an email address or in format Firstname Surname <email@example.com>
  * @returns {string|null} An email address if one can be found, `null` otherwise
  */
@@ -27,6 +53,12 @@ export const findMailAddress = author => {
     return author;
 };
 
+/**
+ * Retrieve all message headers from within a given time range
+ *
+ * @param {number} numberOfDays Number of days to look back from current time
+ * @returns {Promise<messenger.messages.MessageHeader[]>} All message headers from within the given time range
+ */
 const getMessagesFromLastXDays = async numberOfDays => {
     const queryInfo = {
         fromDate: new Date(Date.now() - numberOfDays * 24 * 60 * 60 * 1000)
@@ -42,12 +74,10 @@ const getMessagesFromLastXDays = async numberOfDays => {
 
     let result = [];
     let continueIteration = true;
-    let pageCount = 0;
     do {
         result.push(...queryResult.messages);
         if (queryResult.id !== null) {
             queryResult = await messenger.messages.continueList(queryResult.id);
-            pageCount++;
         } else {
             continueIteration = false;
         }
@@ -60,13 +90,20 @@ const getMessagesFromLastXDays = async numberOfDays => {
  * Creates a histogram of all messages in the given list
  *
  * @param {messenger.messages.MessageHeader[]} messageHeaders
+ * @returns {RecentlyHistorgramEntry[]} All histogram entires or an empty array
  */
-const createHistgram = messageHeaders => {
+const createHistogram = messageHeaders => {
     const result = messageHeaders.reduce((acc, messageHdr) => {
-        const { author } = messageHdr;
+        const { author, junk } = messageHdr;
         const authorAddress = findMailAddress(author);
 
+        // we don't have an author email address? → skip it
         if (!authorAddress) {
+            return acc;
+        }
+
+        // mail is junk? → skip it
+        if (junk) {
             return acc;
         }
 
@@ -93,9 +130,14 @@ const createHistgram = messageHeaders => {
     return Array.from(result.values());
 };
 
+/**
+ * Refreshes the state by updating the message header information list
+ */
 const setState = async () => {
-    state.messages = await getMessagesFromLastXDays(140);
-    state.__histogram = createHistgram(state.messages);
+    state.messages = await getMessagesFromLastXDays(
+        state.options.lookback || 14
+    );
+    state.__histogram = createHistogram(state.messages);
 };
 
 messenger.runtime.onMessage.addListener(async message => {
@@ -103,15 +145,30 @@ messenger.runtime.onMessage.addListener(async message => {
     let result = {};
     switch (action) {
         case 'get:histogram':
-            result = { payload: { histogram: state.__histogram } };
+            result = {
+                payload: {
+                    options: state.options,
+                    histogram: state.__histogram
+                }
+            };
             break;
     }
 
     return result;
 });
 
-setTimeout(() => setState(), 2000);
+const onLoad = () => {
+    setTimeout(() => {
+        setState();
+    }, 2000);
+};
 
 messenger.messages.onNewMailReceived.addListener(() =>
-    setTimeout(() => setState(), 5000)
+    setTimeout(() => setState(), 1000)
 );
+
+messenger.messages.onUpdated.addListener(() => {
+    setTimeout(() => setState(), 1000);
+});
+
+document.addEventListener('DOMContentLoaded', onLoad, { once: true });
