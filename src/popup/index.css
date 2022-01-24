@@ -25,4 +25,5 @@ body {
 .recently-list__item-wrapper:hover {
     border-color: #003eaa;
     background-color: #eee;
+    cursor: pointer;
 }

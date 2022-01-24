@@ -11,6 +11,10 @@ const renderItem = (parent, item) => {
     wrapper.className = 'recently-list__item-wrapper';
     wrapper.appendChild(link);
 
+    wrapper.addEventListener('click', e => {
+        link.dispatchEvent(new MouseEvent('click'));
+    });
+
     li.appendChild(wrapper);
 
     parent.appendChild(li);
@@ -18,16 +22,21 @@ const renderItem = (parent, item) => {
 
 /**
  *
- * @param {[]} histogram
+ * @param {import("../scripts/background").RecentlyHistorgramEntry[]} histogram
  */
 const renderHistogram = histogram => {
     const element = document.querySelector('.recently-list');
-    // while (element.hasChildNodes) {
-    //     element.lastChild.remove();
-    // }
-    histogram
-        .sort((a, b) => a.count - b.count)
-        .map(item => renderItem(element, item));
+    if (histogram.length) {
+        histogram
+            .sort((a, b) => a.count - b.count)
+            .map(item => renderItem(element, item));
+    } else {
+        renderItem(element, {
+            count: 0,
+            names: [messenger.i18n.getMessage('popupNoMessagesFound')],
+            author: ''
+        });
+    }
 };
 
 const renderText = options => {
@@ -55,8 +64,6 @@ const onLoad = async () => {
     const {
         payload: { histogram = [], options }
     } = data;
-
-    console.log('recently, records: ', histogram);
 
     renderHistogram(histogram);
     renderText(options);

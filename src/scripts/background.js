@@ -163,6 +163,14 @@ const onLoad = () => {
     }, 2000);
 };
 
+browser.commands.onCommand.addListener(async command => {
+    switch (command) {
+        case 'open_list':
+            await messenger.browserAction.openPopup();
+            break;
+    }
+});
+
 messenger.messages.onNewMailReceived.addListener(() =>
     setTimeout(() => setState(), 1000)
 );

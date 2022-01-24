@@ -16,5 +16,8 @@
                 "example": "14"
             }
         }
+    },
+    "popupNoMessagesFound": {
+        "message": "No messages found"
     }
 }

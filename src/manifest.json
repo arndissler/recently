@@ -53,10 +53,10 @@
     "commands": {
         "open_list": {
             "suggested_key": {
-                "windows": "Alt+Shift+R",
-                "mac": "Command+Shift+R",
-                "chromeos": "Ctrl+Shift+R",
-                "linux": "Ctrl+Shift+R"
+                "windows": "Alt+Shift+Y",
+                "mac": "Command+Shift+Y",
+                "chromeos": "Ctrl+Shift+Y",
+                "linux": "Ctrl+Shift+Y"
             }
         }
     }
