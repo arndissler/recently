@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Recently</title>
+        <link rel="stylesheet" href="index.css" />
+    </head>
+    <body>
+        <div class="recently-popup">
+            <div class="recently-popup__text-wrapper"></div>
+            <div class="browser-style form">
+                <label data-i18n="optionsLabelLookback" for="recently_lookback">
+                </label>
+                <input
+                    type="number"
+                    id="recently_lookback"
+                    data-property="lookback"
+                    min="2"
+                />
+                <div></div>
+                <button
+                    type="submit"
+                    data-primary
+                    data-i18n="optionsSave"
+                ></button>
+            </div>
+        </div>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
