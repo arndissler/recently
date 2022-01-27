@@ -19,6 +19,10 @@ if [ -d "$sourceFolder" ]; then
         rm -rf "$buildCache"
     fi
 
+    if [ ! -d "../builds" ]; then
+        mkdir ../builds
+    fi
+
     if [ -e "$packageInfo" ]; then
         echo "Package info found."
 
@@ -80,4 +84,14 @@ if [ -d "$sourceFolder" ]; then
 
     cd $buildCache
     zip -r $distFileName . -x@"../utils/excluded-files.list"
+
+    if [ "$1" = "--release" ]; then
+        echo "To publish a GitHub release run:"
+        if [ ! -f './CHANGELOG.md' ]; then
+            echo "Changelog file not found -> check if you're in the correct folder"
+        fi
+        echo "gh release create 'v$version' --notes-file ./CHANGELOG.md '$distFileName#Recently $version'"
+    else
+        echo "No GitHub release will be published"
+    fi
 fi
