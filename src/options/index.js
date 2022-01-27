@@ -1,3 +1,5 @@
+import { translate } from '../modules/i18n.mjs.js';
+
 /**
  * @param {import("../scripts/background").RecentlyOptions} options
  */
@@ -35,8 +37,13 @@ const onLoad = async () => {
 
     showOptions(options);
 
-    const apply = document.querySelector('[type="submit"]');
-    console.log(`apply?`, apply);
+    Array.from(document.querySelectorAll('button[data-url]')).forEach(btn =>
+        btn.addEventListener('click', () =>
+            messenger.windows.openDefaultBrowser(btn.dataset['url'])
+        )
+    );
+
+    const apply = document.getElementById('recently_apply');
     apply.addEventListener('click', async () => {
         /**
          * @type {import("../scripts/background").RecentlyOptions}
@@ -59,15 +66,7 @@ const onLoad = async () => {
         });
     });
 
-    /**
-     * @type {HTMLElement[]}
-     */
-    const elements = Array.from(document.querySelectorAll('[data-i18n]'));
-    elements.forEach(element => {
-        console.log(`localizing ${element.dataset['i18n']}`);
-        const text = messenger.i18n.getMessage(element.dataset['i18n']);
-        element.insertBefore(document.createTextNode(text), element.firstChild);
-    });
+    translate(document);
 };
 
 document.addEventListener('DOMContentLoaded', onLoad, { once: true });

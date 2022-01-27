@@ -11,6 +11,18 @@ body {
     min-height: 100vh;
 }
 
+.recently-options__text-wrapper {
+    padding: 0.5em 1em;
+    background-color: #ededf0;
+    color: #0c0c0d;
+    text-align: center;
+}
+
+.recently-options__donation-button-wrapper {
+    padding-top: 2em;
+    text-align: center;
+}
+
 .form {
     padding-top: 2em;
     padding-bottom: 2em;
@@ -39,10 +51,62 @@ button[data-primary] {
     text-align: center;
 }
 
+button[data-primary]:hover {
+    background-color: #003eaa;
+}
+
+button[data-primary]:active {
+    background-color: #002275;
+}
+
+button[data-primary]:focus {
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff,
+        0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+button.puffy {
+    color: white;
+    background-color: #8000d7;
+    border-radius: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-weight: 400;
+    min-height: 48px;
+    min-width: 132px;
+    border: 1px solid #8000d7;
+    text-align: center;
+    font-size: 15px;
+}
+
+button.puffy:hover {
+    background-color: #6200a4;
+}
+
+button.puffy:hover {
+    background-color: #440071;
+}
+
+button.puffy:focus {
+    border-color: #9400ff;
+    box-shadow: 0 0 0 1px #9400ff inset, 0 0 0 1px #9400ff, 0 0 0 4px #c069ff4d;
+}
+
 input[type='text'],
 input[type='number'],
 select {
     border-radius: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 32px;
+    border-color: rgba(12, 12, 13, 0.2);
+}
+
+input[type='text']:focus,
+input[type='number']:focus,
+select:focus {
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {

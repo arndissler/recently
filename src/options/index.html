@@ -7,7 +7,25 @@
     </head>
     <body>
         <div class="recently-popup">
-            <div class="recently-popup__text-wrapper"></div>
+            <div
+                class="recently-options__text-wrapper"
+                data-i18n="donationMessageExtended"
+            >
+                <div class="recently-options__donation-button-wrapper">
+                    <button
+                        class="puffy"
+                        data-url="https://www.paypal.com/donate?hosted_button_id=F4C4A93H2KFYA"
+                    >
+                        Donate via PayPal
+                    </button>
+                    <button
+                        class="puffy"
+                        data-url="https://www.patreon.com/arndissler"
+                    >
+                        Open Patreon
+                    </button>
+                </div>
+            </div>
             <div class="browser-style form">
                 <label data-i18n="optionsLabelLookback" for="recently_lookback">
                 </label>
@@ -15,11 +33,13 @@
                     type="number"
                     id="recently_lookback"
                     data-property="lookback"
+                    data-type="number"
                     min="2"
                 />
                 <div></div>
                 <button
                     type="submit"
+                    id="recently_apply"
                     data-primary
                     data-i18n="optionsSave"
                 ></button>
