@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/arndissler/recently/compare/v0.0.2...v0.0.3) (2022-01-27)
+
+
+### Bug Fixes
+
+* add .versionrc to bump version number ([87ffe1d](https://github.com/arndissler/recently/commit/87ffe1d8435b568b3fba7a57b5b3ec6880193c3a))
+
 ### 0.0.2 (2022-01-27)
 
 
