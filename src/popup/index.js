@@ -65,6 +65,15 @@ const onLoad = async () => {
         payload: { histogram = [], options }
     } = data;
 
+    /**
+     * @type {HTMLElement[]}
+     */
+    const elements = Array.from(document.querySelectorAll('[data-i18n]'));
+    elements.forEach(element => {
+        const text = messenger.i18n.getMessage(element.dataset['i18n']);
+        element.insertBefore(document.createTextNode(text), element.firstChild);
+    });
+
     renderHistogram(histogram);
     renderText(options);
 };
