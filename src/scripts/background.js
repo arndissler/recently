@@ -2,6 +2,12 @@
 /// <reference types="../../.typings/browser" />
 
 /**
+ * @typedef {Object} RecentlyMessage
+ * @property {string} action
+ * @property {Object=} payload
+ */
+
+/**
  * @typedef {Object} RecentlyHistorgramEntry
  * @property {string[]} names
  * @property {string} author
@@ -9,14 +15,12 @@
  */
 
 /**
- * @typedef RecentlyOptions
- * @type {Object}
+ * @typedef {Object} RecentlyOptions
  * @property {number} [lookback=14]
  */
 
 /**
- * @typedef RecentlyState
- * @type {Object}
+ * @typedef {Object} RecentlyState
  * @property {messenger.messages.MessageHeader[]} messages
  * @property {RecentlyOptions} options
  * @property {RecentlyHistorgramEntry[]} __histogram
@@ -60,6 +64,8 @@ export const findMailAddress = author => {
  * @returns {Promise<messenger.messages.MessageHeader[]>} All message headers from within the given time range
  */
 const getMessagesFromLastXDays = async numberOfDays => {
+    const correlationId = (Math.random() * 1000).toString(16);
+    console.log(`Recently: getting messages… ${correlationId}`);
     const queryInfo = {
         fromDate: new Date(Date.now() - numberOfDays * 24 * 60 * 60 * 1000)
     };
@@ -69,6 +75,10 @@ const getMessagesFromLastXDays = async numberOfDays => {
         Array.isArray(queryResult.messages) &&
         queryResult.messages.length === 0
     ) {
+        console.log(
+            `Recently: getting messages… DONE ${correlationId}`,
+            queryResult
+        );
         return [];
     }
 
@@ -83,6 +93,7 @@ const getMessagesFromLastXDays = async numberOfDays => {
         }
     } while (continueIteration);
 
+    console.log(`Recently: getting messages… DONE ${correlationId}`);
     return result;
 };
 
@@ -141,7 +152,8 @@ const setState = async () => {
 };
 
 messenger.runtime.onMessage.addListener(async message => {
-    const { action } = message;
+    /** @type {RecentlyMessage} */
+    const { action, payload } = message;
     let result = {};
     switch (action) {
         case 'get:histogram':
@@ -152,14 +164,45 @@ messenger.runtime.onMessage.addListener(async message => {
                 }
             };
             break;
+        case 'get:options':
+            result = {
+                payload: {
+                    options: state.options
+                }
+            };
+            break;
+        case 'set:options':
+            const { options = state.options } = payload;
+            try {
+                messenger.storage.local.set(options);
+                state.options = options;
+                setState();
+            } catch (e) {
+                // silence here
+            }
+            break;
     }
 
     return result;
 });
 
-const onLoad = () => {
-    setTimeout(() => {
-        setState();
+const onLoad = async () => {
+    console.log(`Recently started via onLoad`);
+    setTimeout(async () => {
+        try {
+            /** @type { { [key in keyof RecentlyOptions]: string }} */
+            const storagedOptions = await messenger.storage.local.get();
+            console.log(`initialized options`, storagedOptions);
+
+            state.options.lookback = Number.parseInt(
+                String(storagedOptions.lookback || state.options.lookback),
+                10
+            );
+
+            setState();
+        } catch (e) {
+            console.error(`Recently :: oh noes, there's an error`, e);
+        }
     }, 2000);
 };
 
@@ -175,8 +218,8 @@ messenger.messages.onNewMailReceived.addListener(() =>
     setTimeout(() => setState(), 1000)
 );
 
-messenger.messages.onUpdated.addListener(() => {
+messenger.messages.onUpdated?.addListener(() => {
     setTimeout(() => setState(), 1000);
 });
 
-document.addEventListener('DOMContentLoaded', onLoad, { once: true });
+onLoad();
