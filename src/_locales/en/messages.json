@@ -9,7 +9,7 @@
         "message": "Contacts"
     },
     "popupText": {
-        "message": "Messages from within the last $lookback$ days",
+        "message": "Most recent message senders from within the last $lookback$ days",
         "placeholders": {
             "lookback": {
                 "content": "$1",
