@@ -1,3 +1,5 @@
+import { translate } from '../modules/i18n.mjs.js';
+
 const renderItem = (parent, item) => {
     const { names, count, author } = item;
     const li = document.createElement('li');
@@ -65,14 +67,7 @@ const onLoad = async () => {
         payload: { histogram = [], options }
     } = data;
 
-    /**
-     * @type {HTMLElement[]}
-     */
-    const elements = Array.from(document.querySelectorAll('[data-i18n]'));
-    elements.forEach(element => {
-        const text = messenger.i18n.getMessage(element.dataset['i18n']);
-        element.insertBefore(document.createTextNode(text), element.firstChild);
-    });
+    translate(document);
 
     renderHistogram(histogram);
     renderText(options);
