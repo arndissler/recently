@@ -23,6 +23,9 @@
     "optionsLabelLookback": {
         "message": "How many days should Recently look back?"
     },
+    "optionsLabelLimit": {
+        "message": "Maximum number of results:"
+    },
     "optionsSave": {
         "message": "Apply"
     },

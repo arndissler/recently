@@ -17,6 +17,7 @@
 /**
  * @typedef {Object} RecentlyOptions
  * @property {number} [lookback=14]
+ * @property {number} [limit=5]
  */
 
 /**
@@ -30,7 +31,8 @@
 let state = {
     messages: [],
     options: {
-        lookback: 14
+        lookback: 14,
+        limit: 5
     },
     __histogram: []
 };
@@ -103,7 +105,7 @@ const getMessagesFromLastXDays = async numberOfDays => {
  * @param {messenger.messages.MessageHeader[]} messageHeaders
  * @returns {RecentlyHistorgramEntry[]} All histogram entires or an empty array
  */
-const createHistogram = messageHeaders => {
+const createHistogram = (messageHeaders, limit) => {
     const result = messageHeaders.reduce((acc, messageHdr) => {
         const { author, junk } = messageHdr;
         const authorAddress = findMailAddress(author);
@@ -138,7 +140,7 @@ const createHistogram = messageHeaders => {
         return acc;
     }, new Map());
 
-    return Array.from(result.values());
+    return Array.from(result.values()).slice(0, limit || 5);
 };
 
 /**
@@ -148,7 +150,7 @@ const setState = async () => {
     state.messages = await getMessagesFromLastXDays(
         state.options.lookback || 14
     );
-    state.__histogram = createHistogram(state.messages);
+    state.__histogram = createHistogram(state.messages, state.options.limit);
 };
 
 messenger.runtime.onMessage.addListener(async message => {
@@ -196,6 +198,11 @@ const onLoad = async () => {
 
             state.options.lookback = Number.parseInt(
                 String(storagedOptions.lookback || state.options.lookback),
+                10
+            );
+
+            state.options.limit = Number.parseInt(
+                String(storagedOptions.limit || state.options.limit),
                 10
             );
 
