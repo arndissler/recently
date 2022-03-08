@@ -37,7 +37,7 @@ if [ -d "$sourceFolder" ]; then
             exit 7
         fi
         echo "Version does not exist, proceed with building"
-        echo "Artefact wikll be here: $distFileName"
+        echo "Artefact will be here: $distFileName"
     fi
 
     mkdir $buildCache
@@ -83,6 +83,8 @@ if [ -d "$sourceFolder" ]; then
     cp ../LICENSE.txt $buildCache
 
     cd $buildCache
+
+    echo "Start packing at '$buildCache'..."
     zip -r $distFileName . -x@"../utils/excluded-files.list"
 
     if [ "$1" = "--release" ]; then
