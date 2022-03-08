@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/arndissler/recently/compare/v0.0.3...v0.0.4) (2022-03-08)
+
+
+### Features
+
+* limit recently used contacts ([2cc8c06](https://github.com/arndissler/recently/commit/2cc8c06fee3bbfcb7950286aa6a6fdeaa35a812e))
+
 ### [0.0.3](https://github.com/arndissler/recently/compare/v0.0.2...v0.0.3) (2022-01-27)
 
 
