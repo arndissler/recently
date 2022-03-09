@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/arndissler/recently/compare/v0.0.4...v0.0.5) (2022-03-09)
+
+
+### Features
+
+* add German translation ([4179642](https://github.com/arndissler/recently/commit/417964282d6049332b0f015f5a18e8eeb5bad0f8))
+
 ### [0.0.4](https://github.com/arndissler/recently/compare/v0.0.3...v0.0.4) (2022-03-08)
 
 
