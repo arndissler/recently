@@ -1,5 +1,38 @@
 {
-    "extension-name": {
+    "extensionName": {
         "message": "Recently"
+    },
+    "extensionDescription": {
+        "message": "Recently ist eine kleine Mozilla Thunderbird-Erweiterung um die Kontakte der letzten E-Mails schnell zur Hand zu haben."
+    },
+    "browserActionButton": {
+        "message": "Letzte Kontakte"
+    },
+    "popupText": {
+        "message": "Die häufigsten Absender:innen von E-Mails der letzten $lookback$ Tage",
+        "placeholders": {
+            "lookback": {
+                "content": "$1",
+                "example": "14"
+            }
+        }
+    },
+    "popupNoMessagesFound": {
+        "message": "Keine Nachrichten (und Absender:innen) gefunden."
+    },
+    "optionsLabelLookback": {
+        "message": "Wie viele Tage soll Recently auswerten?"
+    },
+    "optionsLabelLimit": {
+        "message": "Maximale Anzahl der angezeigten Kontakte:"
+    },
+    "optionsSave": {
+        "message": "Übernehmen"
+    },
+    "donationMessageShort": {
+        "message": "Bitte spende an Recently."
+    },
+    "donationMessageExtended": {
+        "message": "Recently ist Open Source und kostenlos für Dich. Bitte überlege Dir, ob Du Recently mit einer Spende helfen möchtest (via PayPal) oder ob Du meine Arbeit auf einer monatlichen Basis unterstützen möchtest (via Patreon), damit ich mich auf das konzentrieren kann, was ich liebe: sinnvolle und brauchbare Erweiterungen und Tools zu erstellen und mehr Zeit mit meiner Familie zu verbringen."
     }
 }
