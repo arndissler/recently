@@ -1,6 +1,6 @@
 {
     "name": "recently",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Recently is a small Mozilla Thunderbird extension for having the most recent contacts at hand",
     "repository": "git@github.com:arndissler/recently.git",
     "author": "Arnd Issler <email@arndissler.net>",
